@@ -43,7 +43,15 @@ Step-by-Step:
 2. Use the `filter()` method to apply the callback to the array.
 3. Return the filtered result.
 */
-const filterProducts = [...products].filter(stock => stock.inStock === true && stock.price <= 800);
+function filterProducts(products, callback) {
+  return products.filter(callback); //using the .filter method to filter out the inStock properties that are true and returning them.
+}
+const inStockProducts = filterProducts(products, (product) => product.inStock); //Pushing the array and a function calling the objects in the inStock properties
+console.log("Filtered products:", inStockProducts);
+
+
+
+//const filterProducts = [...products].filter(stock => stock.inStock === true && stock.price <= 800);
 
 /*
 🔹 Task 2: Transform Product Names
@@ -55,7 +63,8 @@ Step-by-Step:
 2. Extract and transform the `name` property to uppercase.
 3. Store the result in a new variable.
 */
-const uppercaseNames = products.map(names => names.name.toUpperCase());
+const uppercaseNames = products.map((names) => names.name.toUpperCase()); //Using the .map method to update only the object names and using the .toUpperCase to make the properties all capital. 
+console.log("Uppercased names:", uppercaseNames);
 
 /*
 🔹 Task 3: Generate Discounted Prices
@@ -71,17 +80,21 @@ Step-by-Step:
 4. Print the array of products to verify the new property and value have been added to each product object.
 */
 
-function applyDiscount(discountPercent) {
-  return function(product) {
-    const saleDiscount = product.price * (discountPercent / 100);
-    product.salePrice = product.price - saleDiscount;
+
+
+function applyDiscount(discountPercent) { //Defining a function with the parameter discountPercent
+  return function(product) { //Returning a new function that takes a product object
+    const saleDiscount = product.price * (discountPercent / 100); //Making a constant to calculate the percent discount.
+    product.salePrice = product.price - saleDiscount; //Subtracting the discount from the total price
     
   };
  
 }
 const discount = applyDiscount(10);
-products.forEach(discount);
+products.forEach(discount); //Using the forEach method to create a new property name salePrice to each object with the discount applied.
+console.log("Discounted products:", products);
 /*
+
 🔹 Task 4: Calculate Total Inventory Value
 
 Use `reduce()` to calculate the total value of products that are currently in stock.
@@ -91,18 +104,17 @@ Step-by-Step:
 2. Add only the prices of products where `inStock` is true.
 3. Store the total in a new variable.
 */
-const inStock = products.reduce((accumulator, stock) => {
-  if (stock.inStock) {
+const inStock = products.reduce((accumulator, stock) => { //Using the reduce method to add the total price in the inStock Objects
+  if (stock.inStock) { //Checking whether the inStock properties are true or false
     return accumulator + stock.price;
   } 
   return accumulator;
 }, 0);
+console.log("Total value in stock:", inStock);
 
 // ============================================
 // 🧪 Console Test Your Work
 // ============================================
 
-console.log("Filtered products:", filterProducts);
-console.log("Uppercased names:", uppercaseNames);
-console.log("Discounted products:", products);
-console.log("Total value in stock:", inStock);
+
+
